@@ -22,7 +22,7 @@ Sistema simples de calculadora desenvolvido para uso interno da empresa, com ace
 Sistema disponível na rede interna:
 
 ```
-http://192.168.88.103:2960
+http://192.1xx.8x.1xx:2960
 ```
 
 Ou via domínio local:
@@ -131,7 +131,7 @@ acessos.log
 Exemplo:
 
 ```
-05/02/2026:14:32:10 | IP: 192.168.88.45 | GET / | Navegador: Mozilla/5.0...
+05/02/2026:14:32:10 | IP: 19X.1Xx.Xx.xx | GET / | Navegador: Mozilla/5.0...
 ```
 
 ---
