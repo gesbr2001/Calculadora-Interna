@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora Básica</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #055daf;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        display: flex;
+        gap: 15px;
+        width: 95%;
+        max-width: 600px;
+    }
+
+    .calculadora {
+        flex: 1;
+        background: #23232c;
+        padding: 15px;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    .display {
+        width: 100%;
+        height: 60px;
+        background: #2e2e2e;
+        color: rgb(253, 253, 253);
+        font-size: 28px;
+        text-align: right;
+        padding: 10px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        overflow-x: auto;
+    }
+
+    .botoes {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+
+    button {
+        height: 55px;
+        font-size: 20px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        background: #3e3e55;
+        color: white;
+    }
+    button.apagar { background-color: #e25402;}
+    button.operador { background: #f7bd1f; }
+    button.igual { background: #28a745; grid-column: span 2; }
+    button.limpar { background: #dc3545; grid-column: span 2; }
+
+    button:active { transform: scale(0.95); }
+
+    .historico {
+        width: 200px;
+        background: #1b1b28;
+        color: white;
+        border-radius: 15px;
+        padding: 10px;
+        overflow-y: auto;
+        font-size: 14px;
+    }
+
+    .historico h3 {
+        text-align: center;
+        margin-top: 0;
+        color: #ff9500;
+    }
+
+    .item-historico {
+        margin-bottom: 8px;
+        border-bottom: 1px solid #333;
+        padding-bottom: 5px;
+    }
+
+    @media(max-width: 600px) {
+        .container {
+            flex-direction: column;
+        }
+        .historico {
+            width: 100%;
+            max-height: 145px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="calculadora">
+        <div id="display" class="display">0</div>
+
+        <div class="botoes">
+            <button onclick="limpar()" class="limpar">🗑️</button>
+            <button onclick="apagar()" class="apagar">🖊️</button>
+            <button onclick="adicionar('/')" class="operador">➗</button>
+            <button onclick="adicionar('*')" class="operador">✖️</button>
+            <button onclick="adicionar('-')" class="operador">➖</button>
+
+            <button onclick="adicionar('7')">7</button>
+            <button onclick="adicionar('8')">8</button>
+            <button onclick="adicionar('9')">9</button>
+            <button onclick="adicionar('+')" class="operador">➕</button>
+
+            <button onclick="adicionar('4')">4</button>
+            <button onclick="adicionar('5')">5</button>
+            <button onclick="adicionar('6')">6</button>
+
+            <button onclick="adicionar('1')">1</button>
+            <button onclick="adicionar('2')">2</button>
+            <button onclick="adicionar('3')">3</button>
+
+            <button onclick="adicionar('0')">0</button>
+            <button onclick="calcular()" class="igual">=</button>
+        </div>
+    </div>
+
+    <div class="historico">
+        <h3>Histórico</h3>
+        <div id="lista-historico"></div>
+    </div>
+</div>
+
+<script>
+    let display = document.getElementById("display");
+    let historico = document.getElementById("lista-historico");
+
+    function adicionar(valor) {
+        if (display.innerText === "0") {
+            display.innerText = valor;
+        } else {
+            display.innerText += valor;
+        }
+    }
+
+    function limpar() {
+        display.innerText = "0";
+        historico.innerHTML = "";
+    }
+
+            function apagar() {
+    let texto = display.innerText;
+
+    if (texto.length === 1) {
+        display.innerText = "0";
+    } else {
+        display.innerText = texto.slice(0, -1);
+    }
+}
+
+    function calcular() {
+        try {
+            let conta = display.innerText;
+            let resultado = eval(conta);
+
+            if (resultado === Infinity || resultado === -Infinity) {
+                display.innerText = "Erro";
+                return;
+            }
+
+            let item = document.createElement("div");
+            item.classList.add("item-historico");
+            item.innerText = conta + " = " + resultado;
+            historico.prepend(item);
+
+            display.innerText = resultado;
+        } catch {
+            display.innerText = "Erro";
+        }
+
+    }
+</script>
+
+</body>
+</html>
